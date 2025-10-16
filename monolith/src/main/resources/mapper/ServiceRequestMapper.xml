@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sunyesle.monolith.service_request.ServiceRequestMapper">
+    <select id="selectAll" resultType="com.sunyesle.monolith.service_request.ServiceRequest">
+        SELECT
+            tsr.id,
+            tsr.title,
+            tsr.customer_id,
+            tc.name customer_name,
+            tsr.type,
+            (SELECT value
+             FROM tb_code tco
+             WHERE tco.code = tsr.type
+             AND tco.code_type = 'SR_TYPE') type_name,
+            tsr.detail,
+            tsr.status,
+            (SELECT value
+             FROM tb_code tco
+             WHERE tco.code = tsr.status
+             AND tco.code_type = 'SR_STATUS') status_name,
+            tsr.call_agent_id,
+            tuc.name call_agent_name,
+            tsr.voc_assignee_id,
+            tua.name voc_assignee_name,
+            tsr.voc_assignee_dept_id,
+            td.name voc_assignee_dept_name,
+            tsr.created_at,
+            tsr.updated_at
+        FROM
+            tb_service_request tsr
+            LEFT JOIN tb_customer tc ON tsr.customer_id = tc.id
+            LEFT JOIN tb_user tua ON tsr.voc_assignee_id = tua.id
+            LEFT JOIN tb_user tuc ON tsr.call_agent_id = tuc.id
+            LEFT JOIN tb_dept td ON tsr.voc_assignee_dept_id = td.id
+        ORDER BY tsr.updated_at DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+</mapper>
