@@ -27,4 +27,12 @@ public class ServiceRequest {
     private String vocAssigneeDeptName;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
 }
