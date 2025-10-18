@@ -2,3 +2,4 @@ rootProject.name = 'spring-boot-architecture-demo'
 
 include 'monolith'
 include 'microservices:service-request-service'
+include 'microservices:common-service'
