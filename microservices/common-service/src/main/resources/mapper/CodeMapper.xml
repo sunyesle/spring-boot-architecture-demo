@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sunyesle.microservices.common.code.CodeMapper">
+    <select id="selectValue" parameterType="map" resultType="string">
+        SELECT value
+        FROM tb_code
+        WHERE code_type = #{codeType}
+        AND code = #{code}
+    </select>
+</mapper>
