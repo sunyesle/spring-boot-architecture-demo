@@ -1,6 +1,7 @@
 package com.sunyesle.microservices.service_request.client.config;
 
 import com.sunyesle.microservices.service_request.client.code.CodeClient;
+import com.sunyesle.microservices.service_request.client.customer.CustomerClient;
 import com.sunyesle.microservices.service_request.client.department.DepartmentClient;
 import com.sunyesle.microservices.service_request.client.user.UserClient;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,12 @@ public class RestClientConfig {
 
     @Value("${service.common.url}")
     private String commonServiceUrl;
+
+    @Bean
+    public CustomerClient customerClient() {
+        HttpServiceProxyFactory httpServiceProxyFactory = getHttpServiceProxyFactory(commonServiceUrl);
+        return httpServiceProxyFactory.createClient(CustomerClient.class);
+    }
 
     @Bean
     public CodeClient codeClient() {

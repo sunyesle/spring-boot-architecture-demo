@@ -28,6 +28,10 @@ public class ServiceRequest {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
