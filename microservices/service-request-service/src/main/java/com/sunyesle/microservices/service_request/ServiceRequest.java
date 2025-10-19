@@ -35,4 +35,12 @@ public class ServiceRequest {
     public void setStatusName(String statusName) {
         this.statusName = statusName;
     }
+
+    public void setCallAgentName(String callAgentName) {
+        this.callAgentName = callAgentName;
+    }
+
+    public void setVocAssigneeName(String vocAssigneeName) {
+        this.vocAssigneeName = vocAssigneeName;
+    }
 }
