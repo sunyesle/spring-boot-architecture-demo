@@ -14,9 +14,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServiceRequestController {
     private final ServiceRequestService serviceRequestService;
+    private final ServiceRequestBatchService serviceRequestBatchService;
 
     @GetMapping
     public ResponseEntity<List<ServiceRequest>> getAll(@RequestParam(defaultValue = "30") int limit, @RequestParam(defaultValue = "0") int offset) {
         return ResponseEntity.ok(serviceRequestService.getAll(limit, offset));
+    }
+
+    @GetMapping("/batch")
+    public ResponseEntity<List<ServiceRequest>> getAllWithBatch(@RequestParam(defaultValue = "30") int limit, @RequestParam(defaultValue = "0") int offset) {
+        return ResponseEntity.ok(serviceRequestBatchService.getAll(limit, offset));
     }
 }
