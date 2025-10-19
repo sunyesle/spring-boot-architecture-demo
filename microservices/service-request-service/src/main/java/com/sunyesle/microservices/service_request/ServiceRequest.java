@@ -43,4 +43,8 @@ public class ServiceRequest {
     public void setVocAssigneeName(String vocAssigneeName) {
         this.vocAssigneeName = vocAssigneeName;
     }
+
+    public void setVocAssigneeDeptName(String vocAssigneeDeptName) {
+        this.vocAssigneeDeptName = vocAssigneeDeptName;
+    }
 }

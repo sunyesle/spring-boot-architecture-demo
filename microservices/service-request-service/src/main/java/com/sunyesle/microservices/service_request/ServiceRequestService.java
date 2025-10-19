@@ -1,6 +1,7 @@
 package com.sunyesle.microservices.service_request;
 
 import com.sunyesle.microservices.service_request.client.code.CodeClient;
+import com.sunyesle.microservices.service_request.client.department.DepartmentClient;
 import com.sunyesle.microservices.service_request.client.user.UserClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ public class ServiceRequestService {
     private final ServiceRequestMapper serviceRequestMapper;
     private final CodeClient codeClient;
     private final UserClient userClient;
+    private final DepartmentClient departmentClient;
 
     public List<ServiceRequest> getAll(int limit, int offset) {
         List<ServiceRequest> serviceRequests = serviceRequestMapper.selectAll(limit, offset);
@@ -21,6 +23,7 @@ public class ServiceRequestService {
             sr.setStatusName(getStatusName(sr.getStatus()));
             sr.setCallAgentName(getUserName(sr.getCallAgentId()));
             sr.setVocAssigneeName(getUserName(sr.getVocAssigneeId()));
+            sr.setVocAssigneeDeptName(getDeptName(sr.getVocAssigneeDeptId()));
         }
         return serviceRequests;
     }
@@ -35,6 +38,10 @@ public class ServiceRequestService {
 
     private String getUserName(String id) {
         return userClient.getUser(id).getName();
+    }
+
+    private String getDeptName(String id) {
+        return departmentClient.getDepartment(id).getName();
     }
 }
 

@@ -1,6 +1,7 @@
 package com.sunyesle.microservices.service_request.client.config;
 
 import com.sunyesle.microservices.service_request.client.code.CodeClient;
+import com.sunyesle.microservices.service_request.client.department.DepartmentClient;
 import com.sunyesle.microservices.service_request.client.user.UserClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,12 @@ public class RestClientConfig {
     public UserClient userClient() {
         HttpServiceProxyFactory httpServiceProxyFactory = getHttpServiceProxyFactory(commonServiceUrl);
         return httpServiceProxyFactory.createClient(UserClient.class);
+    }
+
+    @Bean
+    public DepartmentClient departmentClient() {
+        HttpServiceProxyFactory httpServiceProxyFactory = getHttpServiceProxyFactory(commonServiceUrl);
+        return httpServiceProxyFactory.createClient(DepartmentClient.class);
     }
 
     private HttpServiceProxyFactory getHttpServiceProxyFactory(String baseUrl) {
