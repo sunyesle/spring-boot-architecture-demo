@@ -31,8 +31,8 @@ public class ServiceRequestService {
         return serviceRequests;
     }
 
-    private String getCustomerName(String id) {
-        return customerClient.getCustomer(id).getName();
+    private String getCustomerName(String customerId) {
+        return customerClient.getCustomer(customerId).getName();
     }
 
     private String getTypeName(String type) {
@@ -43,12 +43,12 @@ public class ServiceRequestService {
         return codeClient.getValue("SR_STATUS", status).getValue();
     }
 
-    private String getUserName(String id) {
-        return userClient.getUser(id).getName();
+    private String getUserName(String userId) {
+        return userClient.getUser(userId).getName();
     }
 
-    private String getDeptName(String id) {
-        return departmentClient.getDepartment(id).getName();
+    private String getDeptName(String deptId) {
+        return departmentClient.getDepartment(deptId).getName();
     }
 }
 
