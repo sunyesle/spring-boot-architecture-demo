@@ -8,4 +8,14 @@
         WHERE code_type = #{codeType}
         AND code = #{code}
     </select>
+
+    <select id="selectByCodeTypes" parameterType="list" resultType="com.sunyesle.microservices.common.code.CodeRecord">
+        SELECT code_type, code, value
+        FROM tb_code
+        WHERE code_type IN
+        <foreach item="codeType" collection="codeTypes" open="(" separator="," close=")">
+            #{codeType}
+        </foreach>
+        ORDER BY code_type, code
+    </select>
 </mapper>
