@@ -7,4 +7,14 @@
         FROM tb_dept
         WHERE id = #{id}
     </select>
+
+    <select id="selectByIds" parameterType="list" resultType="com.sunyesle.microservices.common.department.Department">
+        SELECT id, name, created_at, updated_at
+        FROM tb_dept
+        WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY id
+    </select>
 </mapper>
