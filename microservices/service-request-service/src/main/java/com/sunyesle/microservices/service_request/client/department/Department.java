@@ -12,6 +12,6 @@ import java.time.OffsetDateTime;
 public class Department {
     private String id;
     private String name;
-    private String createdAt;
+    private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 }
