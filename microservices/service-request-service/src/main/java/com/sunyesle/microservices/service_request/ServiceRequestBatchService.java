@@ -2,6 +2,8 @@ package com.sunyesle.microservices.service_request;
 
 import com.sunyesle.microservices.service_request.client.code.Code;
 import com.sunyesle.microservices.service_request.client.code.CodeClient;
+import com.sunyesle.microservices.service_request.client.customer.Customer;
+import com.sunyesle.microservices.service_request.client.customer.CustomerClient;
 import com.sunyesle.microservices.service_request.client.department.DepartmentClient;
 import com.sunyesle.microservices.service_request.client.user.User;
 import com.sunyesle.microservices.service_request.client.user.UserClient;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ServiceRequestBatchService {
     private final ServiceRequestMapper serviceRequestMapper;
+    private final CustomerClient customerClient;
     private final CodeClient codeClient;
     private final UserClient userClient;
     private final DepartmentClient departmentClient;
@@ -22,19 +25,23 @@ public class ServiceRequestBatchService {
     public List<ServiceRequest> getAll(int limit, int offset) {
         List<ServiceRequest> serviceRequests = serviceRequestMapper.selectAll(limit, offset);
 
+        Set<String> customerIds = new HashSet<>();
         Set<String> userIds = new HashSet<>();
         Set<String> departmentIds = new HashSet<>();
         for (ServiceRequest sr : serviceRequests) {
+            customerIds.add(sr.getCustomerId());
             userIds.add(sr.getCallAgentId());
             userIds.add(sr.getVocAssigneeId());
             departmentIds.add(sr.getVocAssigneeDeptId());
         }
 
         Map<String, Map<String, String>> codeTypes = getCodeNamesByTypes("SR_TYPE", "SR_STATUS");
+        Map<String, String> customerNames = getCustomerNames(customerIds);
         Map<String, String> userNames = getUserNames(userIds);
         Map<String, String> departmentNames = getDepartmentNames(departmentIds);
 
         for (ServiceRequest sr : serviceRequests) {
+            sr.setCustomerName(customerNames.get(sr.getCustomerId()));
             sr.setTypeName(codeTypes.get("SR_TYPE").get(sr.getType()));
             sr.setStatusName(codeTypes.get("SR_STATUS").get(sr.getStatus()));
             sr.setCallAgentName(userNames.get(sr.getCallAgentId()));
@@ -55,6 +62,14 @@ public class ServiceRequestBatchService {
                                         Code.CodeItem::getCode,
                                         Code.CodeItem::getValue
                                 ))
+                ));
+    }
+
+    private Map<String, String> getCustomerNames(Set<String> customerIds) {
+        return customerClient.getCustomers(customerIds).stream()
+                .collect(Collectors.toMap(
+                        Customer::getId,
+                        Customer::getName
                 ));
     }
 
