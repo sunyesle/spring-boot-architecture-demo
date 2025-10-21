@@ -7,4 +7,14 @@
         FROM tb_customer
         WHERE id = #{id}
     </select>
+
+    <select id="selectByIds" parameterType="list" resultType="com.sunyesle.microservices.common.customer.Customer">
+        SELECT id, name, birthday, gender, address, phone_number, type, created_at, updated_at
+        FROM tb_customer
+        WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY id
+    </select>
 </mapper>
