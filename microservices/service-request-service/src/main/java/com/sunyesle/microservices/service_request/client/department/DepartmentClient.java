@@ -1,6 +1,5 @@
 package com.sunyesle.microservices.service_request.client.department;
 
-import com.sunyesle.microservices.service_request.client.user.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
@@ -13,5 +12,5 @@ public interface DepartmentClient {
     Department getDepartment(@PathVariable String id);
 
     @GetExchange("/api/departments")
-    List<User> getDepartments(@RequestParam Set<String> ids);
+    List<Department> getDepartments(@RequestParam Set<String> ids);
 }

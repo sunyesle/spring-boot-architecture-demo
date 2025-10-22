@@ -84,8 +84,8 @@ public class ServiceRequestBatchService {
     private Map<String, String> getDepartmentNames(Set<String> departmentIds) {
         return departmentClient.getDepartments(departmentIds).stream()
                 .collect(Collectors.toMap(
-                        User::getId,
-                        User::getName
+                        Department::getId,
+                        Department::getName
                 ));
     }
 }
