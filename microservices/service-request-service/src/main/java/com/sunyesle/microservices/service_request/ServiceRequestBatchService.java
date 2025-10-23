@@ -4,6 +4,7 @@ import com.sunyesle.microservices.service_request.client.code.Code;
 import com.sunyesle.microservices.service_request.client.code.CodeClient;
 import com.sunyesle.microservices.service_request.client.customer.Customer;
 import com.sunyesle.microservices.service_request.client.customer.CustomerClient;
+import com.sunyesle.microservices.service_request.client.department.Department;
 import com.sunyesle.microservices.service_request.client.department.DepartmentClient;
 import com.sunyesle.microservices.service_request.client.user.User;
 import com.sunyesle.microservices.service_request.client.user.UserClient;
@@ -17,10 +18,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ServiceRequestBatchService {
     private final ServiceRequestMapper serviceRequestMapper;
-    private final CustomerClient customerClient;
-    private final CodeClient codeClient;
-    private final UserClient userClient;
-    private final DepartmentClient departmentClient;
+    protected final CustomerClient customerClient;
+    protected final CodeClient codeClient;
+    protected final UserClient userClient;
+    protected final DepartmentClient departmentClient;
 
     public List<ServiceRequest> getAll(int limit, int offset) {
         List<ServiceRequest> serviceRequests = serviceRequestMapper.selectAll(limit, offset);
@@ -65,7 +66,7 @@ public class ServiceRequestBatchService {
                 ));
     }
 
-    private Map<String, String> getCustomerNames(Set<String> customerIds) {
+    protected Map<String, String> getCustomerNames(Set<String> customerIds) {
         return customerClient.getCustomers(customerIds).stream()
                 .collect(Collectors.toMap(
                         Customer::getId,
@@ -73,7 +74,7 @@ public class ServiceRequestBatchService {
                 ));
     }
 
-    private Map<String, String> getUserNames(Set<String> userIds) {
+    protected Map<String, String> getUserNames(Set<String> userIds) {
         return userClient.getUsers(userIds).stream()
                 .collect(Collectors.toMap(
                         User::getId,
@@ -81,7 +82,7 @@ public class ServiceRequestBatchService {
                 ));
     }
 
-    private Map<String, String> getDepartmentNames(Set<String> departmentIds) {
+    protected Map<String, String> getDepartmentNames(Set<String> departmentIds) {
         return departmentClient.getDepartments(departmentIds).stream()
                 .collect(Collectors.toMap(
                         Department::getId,

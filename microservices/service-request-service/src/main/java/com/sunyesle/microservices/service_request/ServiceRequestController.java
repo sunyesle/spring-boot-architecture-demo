@@ -15,6 +15,7 @@ import java.util.List;
 public class ServiceRequestController {
     private final ServiceRequestService serviceRequestService;
     private final ServiceRequestBatchService serviceRequestBatchService;
+    private final ServiceRequestCachedService serviceRequestCachedService;
 
     @GetMapping
     public ResponseEntity<List<ServiceRequest>> getAll(@RequestParam(defaultValue = "30") int limit, @RequestParam(defaultValue = "0") int offset) {
@@ -24,5 +25,10 @@ public class ServiceRequestController {
     @GetMapping("/batch")
     public ResponseEntity<List<ServiceRequest>> getAllWithBatch(@RequestParam(defaultValue = "30") int limit, @RequestParam(defaultValue = "0") int offset) {
         return ResponseEntity.ok(serviceRequestBatchService.getAll(limit, offset));
+    }
+
+    @GetMapping("/cache")
+    public ResponseEntity<List<ServiceRequest>> getAllWithCache(@RequestParam(defaultValue = "30") int limit, @RequestParam(defaultValue = "0") int offset) {
+        return ResponseEntity.ok(serviceRequestCachedService.getAll(limit, offset));
     }
 }
